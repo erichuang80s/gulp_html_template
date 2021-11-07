@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/loading.js" async></script>
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+    <title>
+      
+        Car App - 行車
+      
+    </title>
+  </head>
+  <body>
+    <div class="h-100 d-flex flex-column">
+
+
+
+
+    <header class='app-header'>
+        <div class="app-header__container">
+            <div class="app-header__left">
+            </div>
+            <h1 class="app-header__title" id="headerTitle">行車</h1>
+            <div class="app-header__right">
+            </div>
+        </div>
+        <div class="container py-1">
+            <div class="row">
+                <div class="col">
+                    <input type="date" class="form-control form-control-sm" value="2021-11-11">
+                </div>
+                <div class="col">
+                    <button
+                        type="button",
+                        class="btn btn-sm btn-primary w-100"
+                        data-bs-toggle="modal"
+                        data-bs-target="#searchPageModal"                        
+                    >
+                        全部車輛
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <main class="main-nav-pb flex-fill" style="padding-top: 95px;">
+       <section class="border-bottom">
+            <div
+                class="bg-primary px-2 py-1 d-flex justify-content-center align-items-center text-white"
+                role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#detailModal"                 
+            >
+               <h5 class="text-center mb-0">633-JG</h5>
+               <span class="ms-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+               </span>
+           </div>
+           <div>
+
+           </div>
+           <div class="overflow-hidden">
+               <div class="d-flex  overflow-auto">
+
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">開始時間 </div>
+                            <div>06:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">結束時間 </div>
+                            <div>10:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">用車時間 </div>
+                            <div>0時:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">怠速時間 </div>
+                            <div>3時:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">超速時間 </div>
+                            <div>06:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">停車時間 </div>
+                            <div>7時:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">熄火時間 </div>
+                            <div>1時:34:46 </div>
+                        </div>
+                    
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;">失聯時間 </div>
+                            <div>0時:34:46 </div>
+                        </div>
+                    
+               </div>
+           </div>
+       </section>
+    </main>
+
+
+    <!-- search page Modal -->
+    <div class="modal fade" id="searchPageModal">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">633-JG</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe
+                        src="./search.html?partial=1"
+                        frameborder="0"
+                        width="100%"
+                        height="100%"
+                        style="border: 0"
+                        allowfullscreen=""
+                        loading="lazy"                        
+                    >
+                    </iframe>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- detail Modal -->
+    <div class="modal fade" id="detailModal">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">633-JG</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="overflow-hidden sticky-top border-bottom">
+                        <div class="d-flex  overflow-auto">
+         
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">開始時間 </div>
+                                     <div>06:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">結束時間 </div>
+                                     <div>10:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">用車時間 </div>
+                                     <div>0時:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">怠速時間 </div>
+                                     <div>3時:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">超速時間 </div>
+                                     <div>06:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">停車時間 </div>
+                                     <div>7時:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">熄火時間 </div>
+                                     <div>1時:34:46 </div>
+                                 </div>
+                             
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;">失聯時間 </div>
+                                     <div>0時:34:46 </div>
+                                 </div>
+                             
+                        </div>
+                    </div>
+                     
+                    <ul class="list-group list-group-flush">
+                        
+                            <li class="list-group-item bg-gray ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-driving">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                行            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>行駛</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item  ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-idle-speed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                怠            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>怠速</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item bg-gray ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-driving">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                行            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>行駛</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item  ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-idle-speed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                怠            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>怠速</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item bg-gray ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-driving">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                行            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>行駛</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item  ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-idle-speed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                怠            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>怠速</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item bg-gray ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-driving">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                行            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>行駛</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item  ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-idle-speed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                怠            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>怠速</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item bg-gray ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-driving">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                行            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>行駛</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                            <li class="list-group-item  ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-idle-speed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
+                                        
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+    
+    
+        <g transform="translate(6, 6)">
+            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
+            <text 
+                x="0"
+                y="0"
+                fill="white"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                style="font-weight: bold; font-size: 6px;"
+            >
+                怠            </text>
+        </g>
+    
+</svg>  
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span>怠速</span>
+                                            <span>48分9秒</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>06:34:46</span>
+                                            <span>~</span>
+                                            <span>10:34:46</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span>臺南市美術館1館2F展覽室I-J</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        
+                    </ul>             
+                </div>
+            </div>
+        </div>
+    </div>     
+    
+    <nav class="nav nav-pills nav-fill fixed-bottom bg-white shadow-top" id="appNav">
+         
+        <a class="nav-link  " href="./search.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+            </svg>
+            <div class="fs-8">
+                查詢
+            </div>
+        </a>    
+        <a class="nav-link  " href="./map.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-map-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5V.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0L5 14.09zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1-.5-.1z"/>
+            </svg>
+            <div class="fs-8">
+                地圖
+            </div>
+        </a>    
+        <a class="nav-link active" href="./driving.html">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path
+                    d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
+            </svg>
+            <div class="fs-8">
+                行車
+            </div>
+        </a>    
+        <a class="nav-link " href="./report.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-file-earmark-spreadsheet-fill" viewBox="0 0 16 16">
+                <path d="M6 12v-2h3v2H6z"/>
+                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z"/>
+            </svg>
+            <div class="fs-8">
+                報表
+            </div>
+        </a>    
+        <a class="nav-link " href="./setting.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+            </svg>
+            <div class="fs-8">
+                設定
+            </div>
+        </a>    
+    </nav>
+
+
+</div>
+</body>
+</html>

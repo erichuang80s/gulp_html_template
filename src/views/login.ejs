@@ -1,0 +1,23 @@
+<%- include('layout/header', {title: '登入'}) %>
+    <main class="flex-fill bg-primary">
+        <div class="d-flex justify-content-center align-items-center container-sm h-100">
+            <form class="w-75 needs-validation" novalidate>
+                <div class="mb-3">
+                    <input type="text" class="form-control border-white" placeholder="帳號">
+                    <div class="invalid-feedback">
+                        請確認帳號
+                    </div>                    
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control border-white" placeholder="密碼">
+                    <div class="invalid-feedback">
+                        密碼錯誤
+                    </div>                      
+                </div>
+                <div class="mb-3">
+                    <a href="./search.html" class="btn btn-outline-light w-100">登入</a>
+                </div>
+            </form>
+        </div>
+    </main>
+<%- include('layout/footer') %>

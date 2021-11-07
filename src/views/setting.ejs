@@ -1,0 +1,178 @@
+<%- include('layout/header', {title: '設定'}) %>
+    <header class='app-header'>
+        <div class="app-header__container">
+            <div class="app-header__left">
+            </div>
+            <h1 class="app-header__title" id="headerTitle">設定</h1>
+            <div class="app-header__right">
+            </div>
+        </div>
+    </header>
+    <main class="main-nav-pb main-header-pt bg-light d-flex flex-column flex-fill">
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">即時警報</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <% 
+                    const lsit_1 = ['啟動警報', '熄火警報', '停留警報', '超速警報', '溫度警報', '車距警式', '防盜警報']    
+                %>
+                <% lsit_1.forEach((element, index) => { %>
+                    <li class="list-group-item p-0">
+                        <div class="container">
+                            <div class="form-check form-switch py-2 ps-0">
+                                <input class="form-check-input float-end" type="checkbox" id="switch_<%= index _%>">
+                                <label class="form-check-label" for="switch_<%= index _%>"><%= element %> </label>
+                            </div>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>            
+        </div>
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">修改</h5>
+            </div>
+            <div class="text-center py-2">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#searchPageModal"                     
+                >
+                    司機名稱設定
+                </button>
+            </div>
+        </div>
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">更新秒速設定</h5>
+            </div>
+            <div class="text-center p-2">
+                <label for="range_1" id="range_1_label" class="form-label fs-3 text-primary">0</label>
+                <input type="range" value="0" class="form-range" id="range_1" oninput="this.labels[0].textContent = this.value">
+            </div>
+        </div>
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">使用者</h5>
+            </div>
+            <div class="text-center p-2">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginPageModal"                       
+                >
+                    切換使用者
+                </button>
+            </div>
+        </div>
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">休眠設定</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-0">
+                    <div class="container">
+                        <div class="form-check form-switch py-2 ps-0">
+                            <label class="form-check-label" for="switch_sleep_mode">休眠</label>
+                            <input class="form-check-input float-end" type="checkbox" id="switch_sleep_mode">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">地圖資訊設定</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-0">
+                    <div class="container">
+                        <div class="form-check form-switch py-2 ps-0">
+                            <label class="form-check-label" for="switch_map_car_detail">開啟車輛祥是資訊</label>
+                            <input class="form-check-input float-end" type="checkbox" id="switch_map_car_detail">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="p-2 text-white bg-dark">
+                <h5 class="mb-0">系統資訊</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-0">
+                    <div class="container py-2 d-flex justify-content-between">
+                        <div>app 版本</div>
+                        <div>v.1.0.1</div>
+                    </div>
+                </li>
+                <li class="list-group-item p-0">
+                    <div class="container py-2 d-flex justify-content-between">
+                        <div>系統版本</div>
+                        <div>v.1.0.1</div>
+                    </div>
+                </li>
+                <li class="list-group-item p-0">
+                    <div class="container py-2 d-flex justify-content-between">
+                        <span>手機型號</span>
+                        <span>iphone 15</span>
+                    </div>
+                </li>
+            </ul>            
+        </div>        
+    </main>
+
+    <!-- search page Modal -->
+    <div class="modal fade" id="searchPageModal">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">司機名稱設定</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe
+                        src="./search.html?partial=1"
+                        frameborder="0"
+                        width="100%"
+                        height="100%"
+                        style="border: 0"
+                        allowfullscreen=""
+                        loading="lazy"                        
+                    >
+                    </iframe>
+
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <!-- login page Modal -->
+    <div class="modal fade" id="loginPageModal">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">切換使用者</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe
+                        src="./login.html"
+                        frameborder="0"
+                        width="100%"
+                        height="100%"
+                        style="border: 0"
+                        allowfullscreen=""
+                        loading="lazy"                        
+                    >
+                    </iframe>
+
+                </div>
+            </div>
+        </div>
+    </div>    
+    <%- include('layout/nav', {activeName: '設定'}) %>
+<%- include('layout/footer') %>

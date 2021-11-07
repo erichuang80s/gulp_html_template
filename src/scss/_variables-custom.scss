@@ -1,0 +1,37 @@
+$primary:       #4169E1;
+$nav-bottom-height: 56px;
+$flameout: #778899;
+$lost: #D2B48C;
+$app-header-height: 56px;
+
+@import 'variables';
+$driving: $teal-600;
+$speeding: $red-600;
+$idle-speed: $pink-400;
+$parking: $blue-500;
+
+$font-sizes: map-merge(
+  $font-sizes,
+  (
+    7: $font-size-base * 0.85,
+    6: $font-size-base * 0.75,
+    8: $font-size-base * 0.5,
+  )
+);
+
+
+$custom-theme-colors: (
+  "driving ": $driving,
+  "speeding": $speeding,
+  "idle-speed": $idle-speed,
+  "flameout": $flameout,
+  "parking": $parking,
+  "lost": $lost,
+);
+
+$theme-colors: map-merge(
+    $theme-colors,
+    $custom-theme-colors
+);
+
+$shadow-top:    0 -.125rem .25rem rgba($black, .075);

@@ -1,0 +1,100 @@
+<%- include('layout/header', {title: '地圖'}) %>
+    <header class='app-header'>
+        <div class="app-header__container">
+            <div class="app-header__left">
+                <a
+                    class="btn"
+                    data-bs-toggle="offcanvas"
+                    href="#offcanvasCarList"
+                    role="button" 
+                >
+                    車輛清單
+                </a>
+            </div>
+            <h1 class="app-header__title" id="headerTitle">地圖</h1>
+            <div class="app-header__right">
+                <div class="d-flex">
+                  <div class="">
+                    <button
+                      type="button"
+                      class="btn"
+                      data-bs-toggle="offcanvas"
+                      href="#offcanvasCityList"
+                    >
+                      區域
+                    </button>                    
+                  </div>
+                  <div class="">
+                    <div class="dropdown">
+                        <button
+                          type="button"
+                          class="btn"
+                          id="dropdownMenu"
+                          data-bs-toggle="dropdown"
+                        >
+                            街道
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item text-center">街道</a></li>
+                          <li><a class="dropdown-item text-center">衛星</a></li>
+                        </ul>                      
+                    </div>                    
+                  </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 車輛清單 -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCarList">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">車輛清單</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+              <% for( let index = 0; index < 3; index++ ) { %>
+                <li class="list-group-item">
+                  <button
+                    type="button",
+                    class="btn w-100"
+                  >
+                    車輛-<%= index _%>
+                  </button>
+                </li>
+              <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <!-- city all data -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCityList">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">區域</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <button type="button" class="btn w-100">台北市</button>
+              </li>
+              <li class="list-group-item">
+                <button type="button" class="btn w-100">基隆</button>
+              </li>
+            </ul>
+        </div>
+    </div>  
+
+    <main class="main-nav-pb main-header-pt flex-fill">
+			<iframe
+				src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
+				width="100%"
+				height="100%"
+				style="border: 0"
+				allowfullscreen=""
+				loading="lazy"
+			>
+      </iframe>
+    </main>
+    <%- include('layout/nav', {activeName: '地圖'}) %>
+<%- include('layout/footer') %>

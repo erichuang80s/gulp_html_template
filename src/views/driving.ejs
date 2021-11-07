@@ -1,0 +1,163 @@
+<%- include('layout/header', {title: '行車'}) %>
+    <header class='app-header'>
+        <div class="app-header__container">
+            <div class="app-header__left">
+            </div>
+            <h1 class="app-header__title" id="headerTitle">行車</h1>
+            <div class="app-header__right">
+            </div>
+        </div>
+        <div class="container py-1">
+            <div class="row">
+                <div class="col">
+                    <input type="date" class="form-control form-control-sm" value="2021-11-11">
+                </div>
+                <div class="col">
+                    <button
+                        type="button",
+                        class="btn btn-sm btn-primary w-100"
+                        data-bs-toggle="modal"
+                        data-bs-target="#searchPageModal"                        
+                    >
+                        全部車輛
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <%
+        const timeline = [
+            {name: '開始', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '06:34:46'},
+            {name: '結束', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '10:34:46'},
+            {name: '用車', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '0時:34:46'},
+            {name: '怠速', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '3時:34:46'},
+            {name: '超速', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '06:34:46'},
+            {name: '停車', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '7時:34:46'},
+            {name: '熄火', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '1時:34:46'},
+            {name: '失聯', adress: '臺南市美術館1館2F展覽室I-J', start_time: '06:34:46', end_time: '08:34:46', time: '0時:34:46'},
+        ]
+    %>
+
+    <main class="main-nav-pb flex-fill" style="padding-top: 95px;">
+       <section class="border-bottom">
+            <div
+                class="bg-primary px-2 py-1 d-flex justify-content-center align-items-center text-white"
+                role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#detailModal"                 
+            >
+               <h5 class="text-center mb-0">633-JG</h5>
+               <span class="ms-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+               </span>
+           </div>
+           <div>
+
+           </div>
+           <div class="overflow-hidden">
+               <div class="d-flex  overflow-auto">
+
+                    <% timeline.forEach(element => { %>
+                        <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                            <div class="fw-bold" style="width: 80px;"><%= element.name _%>時間 </div>
+                            <div><%= element.time %> </div>
+                        </div>
+                    <% }) %>
+               </div>
+           </div>
+       </section>
+    </main>
+
+
+    <!-- search page Modal -->
+    <div class="modal fade" id="searchPageModal">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">633-JG</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe
+                        src="./search.html?partial=1"
+                        frameborder="0"
+                        width="100%"
+                        height="100%"
+                        style="border: 0"
+                        allowfullscreen=""
+                        loading="lazy"                        
+                    >
+                    </iframe>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- detail Modal -->
+    <div class="modal fade" id="detailModal">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">633-JG</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="overflow-hidden sticky-top border-bottom">
+                        <div class="d-flex  overflow-auto">
+         
+                             <% timeline.forEach(element => { %>
+                                 <div class="py-1 bg-light fs-7 border-end flex-fill text-center">
+                                     <div class="fw-bold" style="width: 80px;"><%= element.name _%>時間 </div>
+                                     <div><%= element.time %> </div>
+                                 </div>
+                             <% }) %>
+                        </div>
+                    </div>
+                    <%
+                        const detail_list = Array.from({length: 10}, (v, n) => {
+                            return {
+                                type:  n % 2 === 0 ? 'driving' : 'idle-speed',
+                                status: n % 2 === 0 ? '行駛' : '怠速',
+                                start_time: '06:34:46',
+                                end_time: '10:34:46',
+                                address: '臺南市美術館1館2F展覽室I-J',
+                                time: '48分9秒'
+                            }
+                        })
+                    %> 
+                    <ul class="list-group list-group-flush">
+                        <% detail_list.forEach((element, index) => { %>
+                            <li class="list-group-item <%= index % 2 === 0 ? 'bg-gray' : '' %> ">
+                                <div class="d-flex">
+                                    <div class="d-flex justify-content-center align-items-center me-2 text-<%= element.type _%>">
+                                        <%- include('layout/car', {prefix: element.status[0]}) %>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <div class="mb-2">
+                                            <span><%= element.status _%></span>
+                                            <span><%= element.time _%></span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span><%= element.start_time _%></span>
+                                            <span>~</span>
+                                            <span><%= element.end_time _%></span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span><%= element.address _%></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                        <% }) %>
+                    </ul>             
+                </div>
+            </div>
+        </div>
+    </div>     
+    <%- include('layout/nav', {activeName: '行車'}) %>
+<%- include('layout/footer') %>

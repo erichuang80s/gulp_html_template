@@ -1,0 +1,65 @@
+@import "functions";
+@import "variables-custom";
+@import "variables";
+@import "utilities";
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "cursor": (
+      property: cursor,
+      class: cursor,
+      responsive: true,
+      values: auto pointer grab,
+    ),
+    "shadow": (
+      property: box-shadow,
+      class: shadow,
+      values: (
+        null: $box-shadow,
+        sm: $box-shadow-sm,
+        lg: $box-shadow-lg,
+        top: $shadow-top,
+        none: none
+      ) 
+    ),
+    "background-color": (
+        property: background-color,
+        class: bg,
+        local-vars: (
+          "bg-opacity": 1
+        ),
+        values: map-merge(
+          $utilities-bg-colors,
+          map-merge(
+            $custom-theme-colors,
+            (
+              gray-200: $gray-200,
+              gray-300: $gray-300,
+            )
+          )
+          
+        )
+    ),
+    "color": (
+      property: color,
+      class: text,
+      local-vars: (
+        "text-opacity": 1
+      ),
+      values: map-merge(
+        $utilities-text-colors,
+        $custom-theme-colors,
+      )
+    ),
+    "object-fit": (
+      property: object-fit,
+      class: object,
+      values: (
+        contain: contain,
+        cover: cover,
+        fill: fill,
+      )
+    )    
+  ),
+)

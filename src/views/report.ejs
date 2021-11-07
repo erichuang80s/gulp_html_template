@@ -1,0 +1,58 @@
+<%- include('layout/header', {title: '報表'}) %>
+    <header class='app-header'>
+        <div class="app-header__container">
+            <div class="app-header__left">
+            </div>
+            <h1 class="app-header__title" id="headerTitle">報表</h1>
+            <div class="app-header__right">
+                <button
+                    type='button'
+                    class="btn"
+                >
+                    重設
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="main-header-pt bg-light flex-fill">
+        <div class="container py-5">
+            <form>
+                <div class="mb-3">
+                    <div><label for="report_type" class="form-label">類型</label></div>
+                    <select class="form-select" id="report_type">
+                        <option value="0">選擇類型</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <div><label for="report_car_type" class="form-label">車輛</label></div>
+                    <select class="form-select" id="report_car_type">
+                        <option value="0">選擇車輛</option>
+                    </select>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div><label for="report_start_date" class="form-label">開始</label></div>
+                        <input type="datetime-local" class="form-control" id="report_start_date" value="2021-06-12T19:30">
+                    </div>
+                    <div class="col-6">
+                        <div><label for="report_end_date" class="form-label">結束</label></div>
+                        <input type="datetime-local" class="form-control" id="report_end_date" value="2021-06-12T19:30">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div><label for="report_unit" class="form-label">單位</label></div>
+                    <select class="form-select" id="report_unit">
+                        <option value="0">公里</option>
+                    </select>                
+                </div>
+                <div class="mb-3 text-center text-danger fs-8">
+                    最多可查24小時
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary w-100">查詢</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <%- include('layout/nav', {activeName: '報表'}) %>
+<%- include('layout/footer') %>
