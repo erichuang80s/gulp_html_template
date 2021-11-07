@@ -1,13 +1,15 @@
-$primary:       #4169E1;
+$primary:       #206CB7;
 $nav-bottom-height: 56px;
 $flameout: #778899;
 $lost: #D2B48C;
+$idle-speed: #FF8C00;
 $app-header-height: 56px;
 
+
 @import 'variables';
+
 $driving: $teal-600;
 $speeding: $red-600;
-$idle-speed: $pink-400;
 $parking: $blue-500;
 
 $font-sizes: map-merge(

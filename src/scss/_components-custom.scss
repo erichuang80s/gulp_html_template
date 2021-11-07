@@ -47,3 +47,11 @@ body {
 .main-nav-pb {
     padding-bottom: $nav-bottom-height + 4px;
 }
+
+.login-bg {
+    object-fit: contain;
+    background-color: $primary;
+    background-image: url('../../img/login_bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+}

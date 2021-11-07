@@ -29,7 +29,7 @@ const DIST = './dist'
 const SRC_SCSS = `${SRC}/scss/*.scss`
 const SRC_SVG = `${SRC}/assets/*.svg`
 const SRC_JS = `${SRC}/js/*.js`
-const SRC_IMG = `${SRC}/img`
+const SRC_IMG = `${SRC}/img/**`
 const SRC_VIEWS = `${SRC}/views/**/*.ejs`
 
 gulp.task('clean', () => {
@@ -152,6 +152,7 @@ gulp.task('browserSync', () => {
     gulp.watch(SRC_VIEWS, gulp.task('ejs'))
     gulp.watch(SRC_SCSS, gulp.task('scss'))
     gulp.watch(SRC_JS, gulp.task('js'))
+    gulp.watch(SRC_IMG, gulp.task('img'))
 
     gulp.watch(`${DIST}/**/*`).on('change', browserSync.reload)
     
