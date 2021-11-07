@@ -1,1456 +1,1731 @@
 <!DOCTYPE html>
 <html lang="zh-Hans-TW">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/loading.js" async></script>
-    <link rel="stylesheet" href="./css/bootstrap.css" />
-    <title>
-      
-        Car App - 查詢
-      
-    </title>
-  </head>
-  <body>
-    <div class="h-100 d-flex flex-column">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="./js/bootstrap.bundle.min.js"></script>
+		<script src="./js/loading.js" async></script>
+		<link rel="stylesheet" href="./css/bootstrap.css" />
+		<title>Car App - 查詢</title>
+	</head>
+	<body>
+		<div class="h-100 d-flex flex-column">
+			<header class="app-header">
+				<!-- header -->
+				<div class="app-header__container">
+					<div
+						class="
+							collapse collapse-horizontal
+							position-absolute
+							top-0
+							start-0
+							end-0
+							p-2
+							bg-white
+						"
+						id="searchCollapse"
+					>
+						<div class="row">
+							<div class="col-9">
+								<input type="text" class="form-control" id="searchInput" />
+							</div>
+							<div class="col">
+								<button
+									type="button"
+									class="btn btn-dark"
+									id="searchCleanBtn"
+									hidden
+								>
+									取消
+								</button>
+							</div>
+						</div>
+					</div>
+					<button
+						type="button"
+						class="btn btn-light d-flex align-items-center"
+						id="searchBtn"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-search"
+							viewBox="0 0 16 16"
+						>
+							<path
+								d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+							/>
+						</svg>
+					</button>
 
+					<script>
+						(function () {
+							const btn = document.getElementById("searchBtn");
+							const cleanBtn = document.getElementById("searchCleanBtn");
+							const title = document.getElementById("headerTitle");
+							const searchInput = document.getElementById("searchInput");
+							const counter = document.getElementById("headerCounter");
+							const searchCollapse = document.getElementById("searchCollapse");
+							const bsCollapse = new bootstrap.Collapse(searchCollapse, {
+								toggle: false,
+							});
 
+							btn.onclick = function (evt) {
+								bsCollapse.show();
+								title.hidden = true;
+								counter.hidden = true;
+							};
+							cleanBtn.onclick = function (evt) {
+								bsCollapse.hide();
+								title.hidden = true;
+								counter.hidden = true;
+							};
 
+							searchCollapse.addEventListener("shown.bs.collapse", (evt) => {
+								cleanBtn.hidden = false;
+							});
 
-    <header class="app-header">
-            <!-- header -->
-            <div class="app-header__container" >
-                <div
-                    class='collapse collapse-horizontal position-absolute top-0 start-0 end-0 p-2 bg-white'
-                    id="searchCollapse"
-                >
-                    <div class='row'>
-                        <div class="col-9">
-                            <input type="text" class="form-control" id="searchInput">
-                        </div>
-                        <div class="col">
-                            <button
-                                type="button"
-                                class="btn btn-dark"
-                                id="searchCleanBtn"
-                                hidden
-                            >
-                                取消
-                            </button>
-                        </div>
-                    </div>
-                </div>                
-                <button
-                    type="button"
-                    class="btn btn-light d-flex align-items-center"
-                    id="searchBtn"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
+							searchCollapse.addEventListener("hide.bs.collapse", (evt) => {
+								cleanBtn.hidden = true;
+								searchInput.value = "";
+							});
+						})();
+					</script>
+					<h1 class="app-header__title" id="headerTitle">查詢</h1>
 
-                </button>
+					<span class="badge bg-secondary" id="headerCounter"> 0 </span>
+				</div>
 
-                <script>
-                    (function() {
-                        const btn = document.getElementById('searchBtn')
-                        const cleanBtn = document.getElementById('searchCleanBtn')
-                        const title = document.getElementById('headerTitle')
-                        const searchInput = document.getElementById('searchInput')
-                        const counter = document.getElementById('headerCounter')
-                        const searchCollapse = document.getElementById('searchCollapse')
-                        const bsCollapse = new bootstrap.Collapse(
-                            searchCollapse,
-                            {
-                                toggle: false
-                            }
-                        )
+				<!-- 資訊選單 -->
+				<div class="p-2 bg-white overflow-hidden">
+					<div class="d-flex overflow-auto">
+						<div class="px-1">
+							<span class="badge bg-driving"> 行駛 1 </span>
+						</div>
 
-                        btn.onclick = function (evt) {
-                            bsCollapse.show()
-                            title.hidden = true
-                            counter.hidden = true
-                        }
-                        cleanBtn.onclick = function (evt) {
-                            bsCollapse.hide()
-                            title.hidden = true
-                            counter.hidden = true
-                        }
+						<div class="px-1">
+							<span class="badge bg-speeding"> 超速 1 </span>
+						</div>
 
-                        searchCollapse.addEventListener('shown.bs.collapse', (evt) => {
-                            cleanBtn.hidden = false
-                        })
+						<div class="px-1">
+							<span class="badge bg-idle-speed"> 怠速 1 </span>
+						</div>
 
-                        searchCollapse.addEventListener('hide.bs.collapse', (evt) => {
-                            cleanBtn.hidden = true
-                            searchInput.value = ''
-                        })
+						<div class="px-1">
+							<span class="badge bg-parking"> 停車 1 </span>
+						</div>
 
-                    })()
-                </script>
-                <h1 class="app-header__title" id="headerTitle">查詢</h1>
+						<div class="px-1">
+							<span class="badge bg-flameout"> 熄火 1 </span>
+						</div>
 
-                <span class='badge bg-secondary' id="headerCounter">
-                    0
-                </span>
+						<div class="px-1">
+							<span class="badge bg-lost"> 失聯 1 </span>
+						</div>
+					</div>
+				</div>
 
-            </div>
+				<!-- 篩選器 -->
+				<div class="w-100 p-2">
+					<select
+						class="form-select form-select-md"
+						aria-label="Default select example"
+					>
+						<option value="0">全部</option>
+						<option value="1">未分配車輛</option>
 
-             
+						<option value="2 ">行駛</option>
 
-            <!-- 資訊選單 -->
-            <div class='p-2 bg-white overflow-hidden'>
-                <div class='d-flex overflow-auto'>
-                    
-                        <div class="px-1">
-                            <span class="badge bg-driving">
-                                行駛
-                                1
-                            </span>
-                        </div>
-                    
-                        <div class="px-1">
-                            <span class="badge bg-speeding">
-                                超速
-                                1
-                            </span>
-                        </div>
-                    
-                        <div class="px-1">
-                            <span class="badge bg-idle-speed">
-                                怠速
-                                1
-                            </span>
-                        </div>
-                    
-                        <div class="px-1">
-                            <span class="badge bg-parking">
-                                停車
-                                1
-                            </span>
-                        </div>
-                    
-                        <div class="px-1">
-                            <span class="badge bg-flameout">
-                                熄火
-                                1
-                            </span>
-                        </div>
-                    
-                        <div class="px-1">
-                            <span class="badge bg-lost">
-                                失聯
-                                1
-                            </span>
-                        </div>
-                    
-                </div>
-            </div>
+						<option value="3 ">超速</option>
 
-            <!-- 篩選器 -->
-            <div class='w-100 p-2'>
-                <select class="form-select form-select-md" aria-label="Default select example">
-                    <option value="0">全部</option>
-                    <option value="1">未分配車輛</option>
-                    
-                        <option value="2 ">行駛 </option>
-                    
-                        <option value="3 ">超速 </option>
-                    
-                        <option value="4 ">怠速 </option>
-                    
-                        <option value="5 ">停車 </option>
-                    
-                        <option value="6 ">熄火 </option>
-                    
-                        <option value="7 ">失聯 </option>
-                    
-                </select>                
-            </div>   
-    </header>        
-    <main class='main-nav-pb d-flex flex-column flex-fill' id="SearchPageMain" style="padding-top: 150px;">
-        <div class='flex-fill bg-gray-300 p-2'>
-             
-            
-                <div class="card shadow-sm mb-2 border-0">
-                    <div class="card-body">                        
-                        <div class="d-flex">
-                            <div class="d-flex flex-column justify-content-center align-items-center px-2 text-driving">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
-                                        
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path
-        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-    
-    
-        <g transform="translate(6, 6)">
-            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
-            <text 
-                x="0"
-                y="0"
-                fill="white"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                style="font-weight: bold; font-size: 6px;"
-            >
-                行            </text>
-        </g>
-    
-</svg>  
-                                </span>
-                                <span>
-                                    行駛 
-                                </span>                            
-                            </div>
-                            <div class="border-start flex-fill ps-3">
-                                <h5 class="card-title text-primary fw-bold mb-0">633-JG-0</h5>
-                                <div class="text-secondary fs-7">20201/11/05 17:30:44 </div> 
-                                <div class="border-bottom my-2"></div>
-                                
+						<option value="4 ">怠速</option>
 
-                                <ul class="list-group list-group-flush">
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">司機</div>
-                                            <span>◯◯◯</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">電話</div>
-                                            <span>0910123245</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">地址</div>
-                                            <span>臺中市西屯區臺灣大道三段99號</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">方向</div>
-                                            <span>東南</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">衛星</div>
-                                            <span>9</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">更新時間</div>
-                                            <span>20201/11/05 17:30:44</span>
-                                        </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+						<option value="5 ">停車</option>
 
-                        <div class="my-2">
-                            <button
-                                class="btn btn-light btn-sm w-100"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-0"
-                            >
-                                展開
-                            </button>
-                        </div>
-                        <!-- collapse -->
-                        <div class="collapse text-center py-2" id="collapse-0">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#mapModal"
-                                >
-                                    地圖
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cctvSelectListModal"
-                                >
-                                    影像
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#trackCarMapModal"
-                                >
-                                    追車
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lockModal"
-                                >
-                                    上鎖
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-             
-            
-                <div class="card shadow-sm mb-2 border-0">
-                    <div class="card-body">                        
-                        <div class="d-flex">
-                            <div class="d-flex flex-column justify-content-center align-items-center px-2 text-speeding">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
-                                        
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path
-        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-    
-    
-        <g transform="translate(6, 6)">
-            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
-            <text 
-                x="0"
-                y="0"
-                fill="white"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                style="font-weight: bold; font-size: 6px;"
-            >
-                超            </text>
-        </g>
-    
-</svg>  
-                                </span>
-                                <span>
-                                    超速 
-                                </span>                            
-                            </div>
-                            <div class="border-start flex-fill ps-3">
-                                <h5 class="card-title text-primary fw-bold mb-0">633-JG-1</h5>
-                                <div class="text-secondary fs-7">20201/11/05 17:30:44 </div> 
-                                <div class="border-bottom my-2"></div>
-                                
+						<option value="6 ">熄火</option>
 
-                                <ul class="list-group list-group-flush">
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">司機</div>
-                                            <span>◯◯◯</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">電話</div>
-                                            <span>0910123245</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">地址</div>
-                                            <span>臺中市西屯區臺灣大道三段99號</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">方向</div>
-                                            <span>東南</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">衛星</div>
-                                            <span>9</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">更新時間</div>
-                                            <span>20201/11/05 17:30:44</span>
-                                        </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+						<option value="7 ">失聯</option>
+					</select>
+				</div>
+			</header>
+			<main
+				class="main-nav-pb d-flex flex-column flex-fill"
+				id="SearchPageMain"
+				style="padding-top: 150px"
+			>
+				<div class="flex-fill bg-gray-300 p-2">
+					<div class="card shadow-sm mb-2 border-0">
+						<div class="card-body">
+							<div class="d-flex">
+								<div
+									class="
+										d-flex
+										flex-column
+										justify-content-center
+										align-items-center
+										px-2
+										text-driving
+									"
+								>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="44"
+											viewBox="0 0 24 24"
+											width="44"
+											fill="currentColor"
+										>
+											<path d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+											/>
 
-                        <div class="my-2">
-                            <button
-                                class="btn btn-light btn-sm w-100"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-1"
-                            >
-                                展開
-                            </button>
-                        </div>
-                        <!-- collapse -->
-                        <div class="collapse text-center py-2" id="collapse-1">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#mapModal"
-                                >
-                                    地圖
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cctvSelectListModal"
-                                >
-                                    影像
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#trackCarMapModal"
-                                >
-                                    追車
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lockModal"
-                                >
-                                    上鎖
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-             
-            
-                <div class="card shadow-sm mb-2 border-0">
-                    <div class="card-body">                        
-                        <div class="d-flex">
-                            <div class="d-flex flex-column justify-content-center align-items-center px-2 text-idle-speed">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
-                                        
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path
-        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-    
-    
-        <g transform="translate(6, 6)">
-            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
-            <text 
-                x="0"
-                y="0"
-                fill="white"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                style="font-weight: bold; font-size: 6px;"
-            >
-                怠            </text>
-        </g>
-    
-</svg>  
-                                </span>
-                                <span>
-                                    怠速 
-                                </span>                            
-                            </div>
-                            <div class="border-start flex-fill ps-3">
-                                <h5 class="card-title text-primary fw-bold mb-0">633-JG-2</h5>
-                                <div class="text-secondary fs-7">20201/11/05 17:30:44 </div> 
-                                <div class="border-bottom my-2"></div>
-                                
+											<g transform="translate(6, 6)">
+												<circle
+													cx="0"
+													cy="0"
+													r="5"
+													stroke="white"
+													stroke-width="1"
+													fill="currentColor"
+												/>
+												<text
+													x="0"
+													y="0"
+													fill="white"
+													text-anchor="middle"
+													alignment-baseline="middle"
+													style="font-weight: bold; font-size: 6px"
+												>
+													行
+												</text>
+											</g>
+										</svg>
+									</span>
+									<span> 行駛 </span>
+								</div>
+								<div class="border-start flex-fill ps-3">
+									<h5 class="card-title text-primary fw-bold mb-0">633-JG-0</h5>
+									<div class="text-secondary fs-7">20201/11/05 17:30:44</div>
+									<div class="border-bottom my-2"></div>
 
-                                <ul class="list-group list-group-flush">
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">司機</div>
-                                            <span>◯◯◯</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">電話</div>
-                                            <span>0910123245</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">地址</div>
-                                            <span>臺中市西屯區臺灣大道三段99號</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">方向</div>
-                                            <span>東南</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">衛星</div>
-                                            <span>9</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">更新時間</div>
-                                            <span>20201/11/05 17:30:44</span>
-                                        </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">司機</div>
+											<span>◯◯◯</span>
+										</li>
 
-                        <div class="my-2">
-                            <button
-                                class="btn btn-light btn-sm w-100"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-2"
-                            >
-                                展開
-                            </button>
-                        </div>
-                        <!-- collapse -->
-                        <div class="collapse text-center py-2" id="collapse-2">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#mapModal"
-                                >
-                                    地圖
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cctvSelectListModal"
-                                >
-                                    影像
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#trackCarMapModal"
-                                >
-                                    追車
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lockModal"
-                                >
-                                    上鎖
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-             
-            
-                <div class="card shadow-sm mb-2 border-0">
-                    <div class="card-body">                        
-                        <div class="d-flex">
-                            <div class="d-flex flex-column justify-content-center align-items-center px-2 text-parking">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
-                                        
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path
-        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-    
-    
-        <g transform="translate(6, 6)">
-            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
-            <text 
-                x="0"
-                y="0"
-                fill="white"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                style="font-weight: bold; font-size: 6px;"
-            >
-                停            </text>
-        </g>
-    
-</svg>  
-                                </span>
-                                <span>
-                                    停車 
-                                </span>                            
-                            </div>
-                            <div class="border-start flex-fill ps-3">
-                                <h5 class="card-title text-primary fw-bold mb-0">633-JG-3</h5>
-                                <div class="text-secondary fs-7">20201/11/05 17:30:44 </div> 
-                                <div class="border-bottom my-2"></div>
-                                
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">電話</div>
+											<span>0910123245</span>
+										</li>
 
-                                <ul class="list-group list-group-flush">
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">司機</div>
-                                            <span>◯◯◯</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">電話</div>
-                                            <span>0910123245</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">地址</div>
-                                            <span>臺中市西屯區臺灣大道三段99號</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">方向</div>
-                                            <span>東南</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">衛星</div>
-                                            <span>9</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">更新時間</div>
-                                            <span>20201/11/05 17:30:44</span>
-                                        </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">地址</div>
+											<span>臺中市西屯區臺灣大道三段99號</span>
+										</li>
 
-                        <div class="my-2">
-                            <button
-                                class="btn btn-light btn-sm w-100"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-3"
-                            >
-                                展開
-                            </button>
-                        </div>
-                        <!-- collapse -->
-                        <div class="collapse text-center py-2" id="collapse-3">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#mapModal"
-                                >
-                                    地圖
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cctvSelectListModal"
-                                >
-                                    影像
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#trackCarMapModal"
-                                >
-                                    追車
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lockModal"
-                                >
-                                    上鎖
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-             
-            
-                <div class="card shadow-sm mb-2 border-0">
-                    <div class="card-body">                        
-                        <div class="d-flex">
-                            <div class="d-flex flex-column justify-content-center align-items-center px-2 text-flameout">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
-                                        
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path
-        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-    
-    
-        <g transform="translate(6, 6)">
-            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
-            <text 
-                x="0"
-                y="0"
-                fill="white"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                style="font-weight: bold; font-size: 6px;"
-            >
-                熄            </text>
-        </g>
-    
-</svg>  
-                                </span>
-                                <span>
-                                    熄火 
-                                </span>                            
-                            </div>
-                            <div class="border-start flex-fill ps-3">
-                                <h5 class="card-title text-primary fw-bold mb-0">633-JG-4</h5>
-                                <div class="text-secondary fs-7">20201/11/05 17:30:44 </div> 
-                                <div class="border-bottom my-2"></div>
-                                
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">方向</div>
+											<span>東南</span>
+										</li>
 
-                                <ul class="list-group list-group-flush">
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">司機</div>
-                                            <span>◯◯◯</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">電話</div>
-                                            <span>0910123245</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">地址</div>
-                                            <span>臺中市西屯區臺灣大道三段99號</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">方向</div>
-                                            <span>東南</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">衛星</div>
-                                            <span>9</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">更新時間</div>
-                                            <span>20201/11/05 17:30:44</span>
-                                        </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">衛星</div>
+											<span>9</span>
+										</li>
 
-                        <div class="my-2">
-                            <button
-                                class="btn btn-light btn-sm w-100"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-4"
-                            >
-                                展開
-                            </button>
-                        </div>
-                        <!-- collapse -->
-                        <div class="collapse text-center py-2" id="collapse-4">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#mapModal"
-                                >
-                                    地圖
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cctvSelectListModal"
-                                >
-                                    影像
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#trackCarMapModal"
-                                >
-                                    追車
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lockModal"
-                                >
-                                    上鎖
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-             
-            
-                <div class="card shadow-sm mb-2 border-0">
-                    <div class="card-body">                        
-                        <div class="d-flex">
-                            <div class="d-flex flex-column justify-content-center align-items-center px-2 text-lost">
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="44" viewBox="0 0 24 24" width="44" fill="currentColor">
-                                        
-    <path d="M0 0h24v24H0z" fill="none" />
-    <path
-        d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-    
-    
-        <g transform="translate(6, 6)">
-            <circle cx="0" cy="0" r="5" stroke="white" stroke-width="1" fill="currentColor" />
-            <text 
-                x="0"
-                y="0"
-                fill="white"
-                text-anchor="middle"
-                alignment-baseline="middle"
-                style="font-weight: bold; font-size: 6px;"
-            >
-                失            </text>
-        </g>
-    
-</svg>  
-                                </span>
-                                <span>
-                                    失聯 
-                                </span>                            
-                            </div>
-                            <div class="border-start flex-fill ps-3">
-                                <h5 class="card-title text-primary fw-bold mb-0">633-JG-5</h5>
-                                <div class="text-secondary fs-7">20201/11/05 17:30:44 </div> 
-                                <div class="border-bottom my-2"></div>
-                                
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">更新時間</div>
+											<span>20201/11/05 17:30:44</span>
+										</li>
+									</ul>
+								</div>
+							</div>
 
-                                <ul class="list-group list-group-flush">
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">司機</div>
-                                            <span>◯◯◯</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">電話</div>
-                                            <span>0910123245</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">地址</div>
-                                            <span>臺中市西屯區臺灣大道三段99號</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">方向</div>
-                                            <span>東南</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">衛星</div>
-                                            <span>9</span>
-                                        </li>
-                                    
-                                        <li class="list-group-item ps-0">
-                                            <div class="text-secondary fs-7">更新時間</div>
-                                            <span>20201/11/05 17:30:44</span>
-                                        </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+							<div class="my-2">
+								<button
+									class="btn btn-light btn-sm w-100"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapse-0"
+								>
+									展開
+								</button>
+							</div>
+							<!-- collapse -->
+							<div class="collapse text-center py-2" id="collapse-0">
+								<div
+									class="btn-group"
+									role="group"
+									aria-label="Basic outlined example"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#mapModal"
+									>
+										地圖
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvSelectListModal"
+									>
+										影像
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#trackCarMapModal"
+									>
+										追車
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#lockModal"
+									>
+										上鎖
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                        <div class="my-2">
-                            <button
-                                class="btn btn-light btn-sm w-100"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-5"
-                            >
-                                展開
-                            </button>
-                        </div>
-                        <!-- collapse -->
-                        <div class="collapse text-center py-2" id="collapse-5">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#mapModal"
-                                >
-                                    地圖
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#cctvSelectListModal"
-                                >
-                                    影像
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#trackCarMapModal"
-                                >
-                                    追車
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#lockModal"
-                                >
-                                    上鎖
-                                </button>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-             
-            
-        </div>
-    </main>
-    <!-- 地圖 Modal -->
-    <div class="modal fade" id="mapModal">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">地圖</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
-                    width="100%"
-                    height="100%"
-                    style="border: 0"
-                    allowfullscreen=""
-                    loading="lazy"
-                    >
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </div>    
-    <!-- 追車地圖 Modal -->
-    <div class="modal fade" id="trackCarMapModal">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">追車</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
-                    width="100%"
-                    height="100%"
-                    style="border: 0"
-                    allowfullscreen=""
-                    loading="lazy"
-                    >
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </div>
+					<div class="card shadow-sm mb-2 border-0">
+						<div class="card-body">
+							<div class="d-flex">
+								<div
+									class="
+										d-flex
+										flex-column
+										justify-content-center
+										align-items-center
+										px-2
+										text-speeding
+									"
+								>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="44"
+											viewBox="0 0 24 24"
+											width="44"
+											fill="currentColor"
+										>
+											<path d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+											/>
 
-        <!-- 影像 list Modal -->
-    <div class="modal fade" id="cctvSelectListModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">地圖</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cctvModal"                                   
-                            >
-                                即時影像
-                            </button>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cctvAndMapModal"                                
-                            >
-                                影像&地圖
-                            </button>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cctvReverseModal"                                
-                            >
-                                影像回放
-                            </button>
-                        </li>
-                      </ul>
-                </div>
-                <div class="modal-footer p-0">
-                    <button class="btn btn-sm w-100" data-bs-target="#cctvSelectListModal" data-bs-toggle="modal">取消</button>
-                </div>                
-            </div>
-        </div>
-    </div>
+											<g transform="translate(6, 6)">
+												<circle
+													cx="0"
+													cy="0"
+													r="5"
+													stroke="white"
+													stroke-width="1"
+													fill="currentColor"
+												/>
+												<text
+													x="0"
+													y="0"
+													fill="white"
+													text-anchor="middle"
+													alignment-baseline="middle"
+													style="font-weight: bold; font-size: 6px"
+												>
+													超
+												</text>
+											</g>
+										</svg>
+									</span>
+									<span> 超速 </span>
+								</div>
+								<div class="border-start flex-fill ps-3">
+									<h5 class="card-title text-primary fw-bold mb-0">633-JG-1</h5>
+									<div class="text-secondary fs-7">20201/11/05 17:30:44</div>
+									<div class="border-bottom my-2"></div>
 
-    <!-- 即時影像 Modal -->
-    <div class="modal fade" id="cctvModal">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">即時影像</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column p-0">
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                        <div class="row flex-fill bg-dark">
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                            <div class="col px-0">
-                                <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                            </div>
-                        </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 影像 list Modal -->
-    <div class="modal fade" id="cctvSelectListModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">地圖</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                            >
-                                即時影像
-                            </button>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cctvAndMapModal"                                
-                            >
-                                影像&地圖
-                            </button>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cctvReverseModal"                                
-                            >
-                                影像回放
-                            </button>
-                        </li>
-                      </ul>
-                </div>
-                <div class="modal-footer p-0">
-                    <button class="btn btn-sm w-100" data-bs-target="#cctvSelectListModal" data-bs-toggle="modal">取消</button>
-                </div>                
-            </div>
-        </div>
-    </div>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">司機</div>
+											<span>◯◯◯</span>
+										</li>
 
-    <!-- 影像地圖 Modal -->
-    <div class="modal fade" id="cctvAndMapModal">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">影像&地圖</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column p-0">
-                    <div
-                        class="h-50 d-flex flex-column"
-                    >
-                    
-                        
-                            <div class="row flex-fill bg-dark">
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                            </div>
-                        
-                            <div class="row flex-fill bg-dark">
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                            </div>
-                        
-                            <div class="row flex-fill bg-dark">
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                                <div class="col px-0">
-                                    <img class="object-contain w-100 h-100" src="https://picsum.photos/seed/picsum/800/600">
-                                </div>
-                            </div>
-                        
-                    </div>
-                    <div
-                        class="h-50"
-                    >
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
-                            width="100%"
-                            height="100%"
-                            style="border: 0"
-                            allowfullscreen=""
-                            loading="lazy"
-                        >
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">電話</div>
+											<span>0910123245</span>
+										</li>
 
-    <!-- 影像回放 Modal -->
-    <div class="modal fade" id="cctvReverseModal">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">影像回放</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <select class="form-select">
-                                <option value="0">雲端硬碟</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <select class="form-select">
-                                <option value="0">CH1</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <select class="form-select">
-                                <option value="0">20210-11-11</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 text-center">
-                            <button
-                                type="button"
-                                class="btn btn-primary w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cctvReverseResutlModal"                                  
-                                >
-                                搜尋
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">地址</div>
+											<span>臺中市西屯區臺灣大道三段99號</span>
+										</li>
 
-    <!-- 影像回放查詢結果 Modal -->
-    <div class="modal fade" id="cctvReverseResutlModal">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">查詢結果</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <ul class="list-group list-group-flush">
-                        
-                            <li class="list-group-item">
-                                <div class="d-flex">
-                                    <div style="width: 200px;">
-                                        <img src="https://picsum.photos/800/600" class="w-100 h-100 object-contain">
-                                    </div>
-                                    <div class="ms-2 flex-fill">
-                                        <div>2021-11-11 06:22:21 06:33:01</div>
-                                        <div>CH1</div>
-                                    </div>
-                                </div>
-                            </li>
-                        
-                            <li class="list-group-item">
-                                <div class="d-flex">
-                                    <div style="width: 200px;">
-                                        <img src="https://picsum.photos/800/600" class="w-100 h-100 object-contain">
-                                    </div>
-                                    <div class="ms-2 flex-fill">
-                                        <div>2021-11-11 06:22:21 06:33:01</div>
-                                        <div>CH1</div>
-                                    </div>
-                                </div>
-                            </li>
-                        
-                            <li class="list-group-item">
-                                <div class="d-flex">
-                                    <div style="width: 200px;">
-                                        <img src="https://picsum.photos/800/600" class="w-100 h-100 object-contain">
-                                    </div>
-                                    <div class="ms-2 flex-fill">
-                                        <div>2021-11-11 06:22:21 06:33:01</div>
-                                        <div>CH1</div>
-                                    </div>
-                                </div>
-                            </li>
-                        
-                            <li class="list-group-item">
-                                <div class="d-flex">
-                                    <div style="width: 200px;">
-                                        <img src="https://picsum.photos/800/600" class="w-100 h-100 object-contain">
-                                    </div>
-                                    <div class="ms-2 flex-fill">
-                                        <div>2021-11-11 06:22:21 06:33:01</div>
-                                        <div>CH1</div>
-                                    </div>
-                                </div>
-                            </li>
-                        
-                            <li class="list-group-item">
-                                <div class="d-flex">
-                                    <div style="width: 200px;">
-                                        <img src="https://picsum.photos/800/600" class="w-100 h-100 object-contain">
-                                    </div>
-                                    <div class="ms-2 flex-fill">
-                                        <div>2021-11-11 06:22:21 06:33:01</div>
-                                        <div>CH1</div>
-                                    </div>
-                                </div>
-                            </li>
-                        
-                    </ul>                    
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
-            </div>
-        </div>
-    </div> 
-    
-    <!-- 上鎖 list Modal -->
-    <div class="modal fade" id="lockModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">上鎖</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                            >
-                                上鎖至解鎖
-                            </button>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <button
-                                type="button"
-                                class="btn w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target=""                                
-                            >
-                                上鎖至指定時間
-                            </button>
-                        </li>
-                      </ul>
-                </div>
-                <div class="modal-footer p-0">
-                    <button class="btn btn-sm w-100" data-bs-target="#lockModal" data-bs-toggle="modal">取消</button>
-                </div>                
-            </div>
-        </div>
-    </div>    
-    
-    <nav class="nav nav-pills nav-fill fixed-bottom bg-white shadow-top" id="appNav">
-         
-        <a class="nav-link active " href="./search.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
-                <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
-            </svg>
-            <div class="fs-8">
-                查詢
-            </div>
-        </a>    
-        <a class="nav-link  " href="./map.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-map-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5V.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0L5 14.09zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1-.5-.1z"/>
-            </svg>
-            <div class="fs-8">
-                地圖
-            </div>
-        </a>    
-        <a class="nav-link " href="./driving.html">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path
-                    d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z" />
-            </svg>
-            <div class="fs-8">
-                行車
-            </div>
-        </a>    
-        <a class="nav-link " href="./report.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-file-earmark-spreadsheet-fill" viewBox="0 0 16 16">
-                <path d="M6 12v-2h3v2H6z"/>
-                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z"/>
-            </svg>
-            <div class="fs-8">
-                報表
-            </div>
-        </a>    
-        <a class="nav-link " href="./setting.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-            </svg>
-            <div class="fs-8">
-                設定
-            </div>
-        </a>    
-    </nav>
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">方向</div>
+											<span>東南</span>
+										</li>
 
-    <script>
-        (function() {
-            const search = location.search
-            const query = new URLSearchParams(search)
-            const value = query.get('partial')
-            if(value) {
-                const num = Number(value)
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">衛星</div>
+											<span>9</span>
+										</li>
 
-                if(!isNaN(num) && Boolean(num)) {
-                    const SearchPageMain = document.getElementById('SearchPageMain')
-                    const appNav = document.getElementById('appNav')
-                    appNav.hidden = true
-                    SearchPageMain.classList.remove('main-nav-pb')
-                }
-                
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">更新時間</div>
+											<span>20201/11/05 17:30:44</span>
+										</li>
+									</ul>
+								</div>
+							</div>
 
-            }
-        })()
-    </script>    
+							<div class="my-2">
+								<button
+									class="btn btn-light btn-sm w-100"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapse-1"
+								>
+									展開
+								</button>
+							</div>
+							<!-- collapse -->
+							<div class="collapse text-center py-2" id="collapse-1">
+								<div
+									class="btn-group"
+									role="group"
+									aria-label="Basic outlined example"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#mapModal"
+									>
+										地圖
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvSelectListModal"
+									>
+										影像
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#trackCarMapModal"
+									>
+										追車
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#lockModal"
+									>
+										上鎖
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
-</div>
-</body>
+					<div class="card shadow-sm mb-2 border-0">
+						<div class="card-body">
+							<div class="d-flex">
+								<div
+									class="
+										d-flex
+										flex-column
+										justify-content-center
+										align-items-center
+										px-2
+										text-idle-speed
+									"
+								>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="44"
+											viewBox="0 0 24 24"
+											width="44"
+											fill="currentColor"
+										>
+											<path d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+											/>
+
+											<g transform="translate(6, 6)">
+												<circle
+													cx="0"
+													cy="0"
+													r="5"
+													stroke="white"
+													stroke-width="1"
+													fill="currentColor"
+												/>
+												<text
+													x="0"
+													y="0"
+													fill="white"
+													text-anchor="middle"
+													alignment-baseline="middle"
+													style="font-weight: bold; font-size: 6px"
+												>
+													怠
+												</text>
+											</g>
+										</svg>
+									</span>
+									<span> 怠速 </span>
+								</div>
+								<div class="border-start flex-fill ps-3">
+									<h5 class="card-title text-primary fw-bold mb-0">633-JG-2</h5>
+									<div class="text-secondary fs-7">20201/11/05 17:30:44</div>
+									<div class="border-bottom my-2"></div>
+
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">司機</div>
+											<span>◯◯◯</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">電話</div>
+											<span>0910123245</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">地址</div>
+											<span>臺中市西屯區臺灣大道三段99號</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">方向</div>
+											<span>東南</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">衛星</div>
+											<span>9</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">更新時間</div>
+											<span>20201/11/05 17:30:44</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="my-2">
+								<button
+									class="btn btn-light btn-sm w-100"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapse-2"
+								>
+									展開
+								</button>
+							</div>
+							<!-- collapse -->
+							<div class="collapse text-center py-2" id="collapse-2">
+								<div
+									class="btn-group"
+									role="group"
+									aria-label="Basic outlined example"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#mapModal"
+									>
+										地圖
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvSelectListModal"
+									>
+										影像
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#trackCarMapModal"
+									>
+										追車
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#lockModal"
+									>
+										上鎖
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card shadow-sm mb-2 border-0">
+						<div class="card-body">
+							<div class="d-flex">
+								<div
+									class="
+										d-flex
+										flex-column
+										justify-content-center
+										align-items-center
+										px-2
+										text-parking
+									"
+								>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="44"
+											viewBox="0 0 24 24"
+											width="44"
+											fill="currentColor"
+										>
+											<path d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+											/>
+
+											<g transform="translate(6, 6)">
+												<circle
+													cx="0"
+													cy="0"
+													r="5"
+													stroke="white"
+													stroke-width="1"
+													fill="currentColor"
+												/>
+												<text
+													x="0"
+													y="0"
+													fill="white"
+													text-anchor="middle"
+													alignment-baseline="middle"
+													style="font-weight: bold; font-size: 6px"
+												>
+													停
+												</text>
+											</g>
+										</svg>
+									</span>
+									<span> 停車 </span>
+								</div>
+								<div class="border-start flex-fill ps-3">
+									<h5 class="card-title text-primary fw-bold mb-0">633-JG-3</h5>
+									<div class="text-secondary fs-7">20201/11/05 17:30:44</div>
+									<div class="border-bottom my-2"></div>
+
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">司機</div>
+											<span>◯◯◯</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">電話</div>
+											<span>0910123245</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">地址</div>
+											<span>臺中市西屯區臺灣大道三段99號</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">方向</div>
+											<span>東南</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">衛星</div>
+											<span>9</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">更新時間</div>
+											<span>20201/11/05 17:30:44</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="my-2">
+								<button
+									class="btn btn-light btn-sm w-100"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapse-3"
+								>
+									展開
+								</button>
+							</div>
+							<!-- collapse -->
+							<div class="collapse text-center py-2" id="collapse-3">
+								<div
+									class="btn-group"
+									role="group"
+									aria-label="Basic outlined example"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#mapModal"
+									>
+										地圖
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvSelectListModal"
+									>
+										影像
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#trackCarMapModal"
+									>
+										追車
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#lockModal"
+									>
+										上鎖
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card shadow-sm mb-2 border-0">
+						<div class="card-body">
+							<div class="d-flex">
+								<div
+									class="
+										d-flex
+										flex-column
+										justify-content-center
+										align-items-center
+										px-2
+										text-flameout
+									"
+								>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="44"
+											viewBox="0 0 24 24"
+											width="44"
+											fill="currentColor"
+										>
+											<path d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+											/>
+
+											<g transform="translate(6, 6)">
+												<circle
+													cx="0"
+													cy="0"
+													r="5"
+													stroke="white"
+													stroke-width="1"
+													fill="currentColor"
+												/>
+												<text
+													x="0"
+													y="0"
+													fill="white"
+													text-anchor="middle"
+													alignment-baseline="middle"
+													style="font-weight: bold; font-size: 6px"
+												>
+													熄
+												</text>
+											</g>
+										</svg>
+									</span>
+									<span> 熄火 </span>
+								</div>
+								<div class="border-start flex-fill ps-3">
+									<h5 class="card-title text-primary fw-bold mb-0">633-JG-4</h5>
+									<div class="text-secondary fs-7">20201/11/05 17:30:44</div>
+									<div class="border-bottom my-2"></div>
+
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">司機</div>
+											<span>◯◯◯</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">電話</div>
+											<span>0910123245</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">地址</div>
+											<span>臺中市西屯區臺灣大道三段99號</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">方向</div>
+											<span>東南</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">衛星</div>
+											<span>9</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">更新時間</div>
+											<span>20201/11/05 17:30:44</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="my-2">
+								<button
+									class="btn btn-light btn-sm w-100"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapse-4"
+								>
+									展開
+								</button>
+							</div>
+							<!-- collapse -->
+							<div class="collapse text-center py-2" id="collapse-4">
+								<div
+									class="btn-group"
+									role="group"
+									aria-label="Basic outlined example"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#mapModal"
+									>
+										地圖
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvSelectListModal"
+									>
+										影像
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#trackCarMapModal"
+									>
+										追車
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#lockModal"
+									>
+										上鎖
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card shadow-sm mb-2 border-0">
+						<div class="card-body">
+							<div class="d-flex">
+								<div
+									class="
+										d-flex
+										flex-column
+										justify-content-center
+										align-items-center
+										px-2
+										text-lost
+									"
+								>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="44"
+											viewBox="0 0 24 24"
+											width="44"
+											fill="currentColor"
+										>
+											<path d="M0 0h24v24H0z" fill="none" />
+											<path
+												d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+											/>
+
+											<g transform="translate(6, 6)">
+												<circle
+													cx="0"
+													cy="0"
+													r="5"
+													stroke="white"
+													stroke-width="1"
+													fill="currentColor"
+												/>
+												<text
+													x="0"
+													y="0"
+													fill="white"
+													text-anchor="middle"
+													alignment-baseline="middle"
+													style="font-weight: bold; font-size: 6px"
+												>
+													失
+												</text>
+											</g>
+										</svg>
+									</span>
+									<span> 失聯 </span>
+								</div>
+								<div class="border-start flex-fill ps-3">
+									<h5 class="card-title text-primary fw-bold mb-0">633-JG-5</h5>
+									<div class="text-secondary fs-7">20201/11/05 17:30:44</div>
+									<div class="border-bottom my-2"></div>
+
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">司機</div>
+											<span>◯◯◯</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">電話</div>
+											<span>0910123245</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">地址</div>
+											<span>臺中市西屯區臺灣大道三段99號</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">方向</div>
+											<span>東南</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">衛星</div>
+											<span>9</span>
+										</li>
+
+										<li class="list-group-item ps-0">
+											<div class="text-secondary fs-7">更新時間</div>
+											<span>20201/11/05 17:30:44</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="my-2">
+								<button
+									class="btn btn-light btn-sm w-100"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapse-5"
+								>
+									展開
+								</button>
+							</div>
+							<!-- collapse -->
+							<div class="collapse text-center py-2" id="collapse-5">
+								<div
+									class="btn-group"
+									role="group"
+									aria-label="Basic outlined example"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#mapModal"
+									>
+										地圖
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvSelectListModal"
+									>
+										影像
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#trackCarMapModal"
+									>
+										追車
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-primary"
+										data-bs-toggle="modal"
+										data-bs-target="#lockModal"
+									>
+										上鎖
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<!-- 地圖 Modal -->
+			<div class="modal fade" id="mapModal">
+				<div class="modal-dialog modal-fullscreen">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">地圖</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body p-0">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
+								width="100%"
+								height="100%"
+								style="border: 0"
+								allowfullscreen=""
+								loading="lazy"
+							>
+							</iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 追車地圖 Modal -->
+			<div class="modal fade" id="trackCarMapModal">
+				<div class="modal-dialog modal-fullscreen">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">追車</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body p-0">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
+								width="100%"
+								height="100%"
+								style="border: 0"
+								allowfullscreen=""
+								loading="lazy"
+							>
+							</iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 影像 list Modal -->
+			<div class="modal fade" id="cctvSelectListModal">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">地圖</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body p-0">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item p-0">
+									<button
+										type="button"
+										class="btn w-100"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvModal"
+									>
+										即時影像
+									</button>
+								</li>
+								<li class="list-group-item p-0">
+									<button
+										type="button"
+										class="btn w-100"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvAndMapModal"
+									>
+										影像&地圖
+									</button>
+								</li>
+								<li class="list-group-item p-0">
+									<button
+										type="button"
+										class="btn w-100"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvReverseModal"
+									>
+										影像回放
+									</button>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer p-0">
+							<button
+								class="btn btn-sm w-100"
+								data-bs-target="#cctvSelectListModal"
+								data-bs-toggle="modal"
+							>
+								取消
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 即時影像 Modal -->
+			<div class="modal fade" id="cctvModal">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">即時影像</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body d-flex flex-column p-0">
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+
+							<div class="row flex-fill bg-dark">
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+								<div class="col px-0">
+									<img
+										class="object-contain w-100 h-100"
+										src="https://picsum.photos/seed/picsum/800/600"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 影像 list Modal -->
+			<div class="modal fade" id="cctvSelectListModal">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">地圖</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body p-0">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item p-0">
+									<button type="button" class="btn w-100">即時影像</button>
+								</li>
+								<li class="list-group-item p-0">
+									<button
+										type="button"
+										class="btn w-100"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvAndMapModal"
+									>
+										影像&地圖
+									</button>
+								</li>
+								<li class="list-group-item p-0">
+									<button
+										type="button"
+										class="btn w-100"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvReverseModal"
+									>
+										影像回放
+									</button>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer p-0">
+							<button
+								class="btn btn-sm w-100"
+								data-bs-target="#cctvSelectListModal"
+								data-bs-toggle="modal"
+							>
+								取消
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 影像地圖 Modal -->
+			<div class="modal fade" id="cctvAndMapModal">
+				<div class="modal-dialog modal-fullscreen">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">影像&地圖</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body d-flex flex-column p-0">
+							<div class="h-50 d-flex flex-column">
+								<div class="row flex-fill bg-dark">
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+								</div>
+
+								<div class="row flex-fill bg-dark">
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+								</div>
+
+								<div class="row flex-fill bg-dark">
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+									<div class="col px-0">
+										<img
+											class="object-contain w-100 h-100"
+											src="https://picsum.photos/seed/picsum/800/600"
+										/>
+									</div>
+								</div>
+							</div>
+							<div class="h-50">
+								<iframe
+									src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14559.552866047392!2d120.6399959!3d24.1756528!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469162731ba40fb%3A0x63486774270c9062!2z56aP5pif5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1634886360716!5m2!1szh-TW!2stw"
+									width="100%"
+									height="100%"
+									style="border: 0"
+									allowfullscreen=""
+									loading="lazy"
+								>
+								</iframe>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 影像回放 Modal -->
+			<div class="modal fade" id="cctvReverseModal">
+				<div class="modal-dialog modal-fullscreen">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">影像回放</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="mb-3">
+									<select class="form-select">
+										<option value="0">雲端硬碟</option>
+									</select>
+								</div>
+								<div class="mb-3">
+									<select class="form-select">
+										<option value="0">CH1</option>
+									</select>
+								</div>
+								<div class="mb-3">
+									<select class="form-select">
+										<option value="0">20210-11-11</option>
+									</select>
+								</div>
+								<div class="mb-3 text-center">
+									<button
+										type="button"
+										class="btn btn-primary w-100"
+										data-bs-toggle="modal"
+										data-bs-target="#cctvReverseResutlModal"
+									>
+										搜尋
+									</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 影像回放查詢結果 Modal -->
+			<div class="modal fade" id="cctvReverseResutlModal">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">查詢結果</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body p-0">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<div class="d-flex">
+										<div style="width: 200px">
+											<img
+												src="https://picsum.photos/800/600"
+												class="w-100 h-100 object-contain"
+											/>
+										</div>
+										<div class="ms-2 flex-fill">
+											<div>2021-11-11 06:22:21 06:33:01</div>
+											<div>CH1</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="list-group-item">
+									<div class="d-flex">
+										<div style="width: 200px">
+											<img
+												src="https://picsum.photos/800/600"
+												class="w-100 h-100 object-contain"
+											/>
+										</div>
+										<div class="ms-2 flex-fill">
+											<div>2021-11-11 06:22:21 06:33:01</div>
+											<div>CH1</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="list-group-item">
+									<div class="d-flex">
+										<div style="width: 200px">
+											<img
+												src="https://picsum.photos/800/600"
+												class="w-100 h-100 object-contain"
+											/>
+										</div>
+										<div class="ms-2 flex-fill">
+											<div>2021-11-11 06:22:21 06:33:01</div>
+											<div>CH1</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="list-group-item">
+									<div class="d-flex">
+										<div style="width: 200px">
+											<img
+												src="https://picsum.photos/800/600"
+												class="w-100 h-100 object-contain"
+											/>
+										</div>
+										<div class="ms-2 flex-fill">
+											<div>2021-11-11 06:22:21 06:33:01</div>
+											<div>CH1</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="list-group-item">
+									<div class="d-flex">
+										<div style="width: 200px">
+											<img
+												src="https://picsum.photos/800/600"
+												class="w-100 h-100 object-contain"
+											/>
+										</div>
+										<div class="ms-2 flex-fill">
+											<div>2021-11-11 06:22:21 06:33:01</div>
+											<div>CH1</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 上鎖 list Modal -->
+			<div class="modal fade" id="lockModal">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">上鎖</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body p-0">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item p-0">
+									<button type="button" class="btn w-100">上鎖至解鎖</button>
+								</li>
+								<li class="list-group-item p-0">
+									<button
+										type="button"
+										class="btn w-100"
+										data-bs-toggle="modal"
+										data-bs-target=""
+									>
+										上鎖至指定時間
+									</button>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer p-0">
+							<button
+								class="btn btn-sm w-100"
+								data-bs-target="#lockModal"
+								data-bs-toggle="modal"
+							>
+								取消
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<nav
+				class="nav nav-pills nav-fill fixed-bottom bg-white shadow-top"
+				id="appNav"
+			>
+				<a class="nav-link active" href="./search.html">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="currentColor"
+						class="bi bi-view-list"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"
+						/>
+					</svg>
+					<div class="fs-8">查詢</div>
+				</a>
+				<a class="nav-link" href="./map.html">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="currentColor"
+						class="bi bi-map-fill"
+						viewBox="0 0 16 16"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5V.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0L5 14.09zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1-.5-.1z"
+						/>
+					</svg>
+					<div class="fs-8">地圖</div>
+				</a>
+				<a class="nav-link" href="./driving.html">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						height="24"
+						viewBox="0 0 24 24"
+						width="24"
+						fill="currentColor"
+					>
+						<path d="M0 0h24v24H0z" fill="none" />
+						<path
+							d="M18.92 5.01C18.72 4.42 18.16 4 17.5 4h-11c-.66 0-1.21.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 10l1.5-4.5h11L19 10H5z"
+						/>
+					</svg>
+					<div class="fs-8">行車</div>
+				</a>
+				<a class="nav-link" href="./report.html">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="currentColor"
+						class="bi bi-file-earmark-spreadsheet-fill"
+						viewBox="0 0 16 16"
+					>
+						<path d="M6 12v-2h3v2H6z" />
+						<path
+							d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z"
+						/>
+					</svg>
+					<div class="fs-8">報表</div>
+				</a>
+				<a class="nav-link" href="./setting.html">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="currentColor"
+						class="bi bi-gear-fill"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
+						/>
+					</svg>
+					<div class="fs-8">設定</div>
+				</a>
+			</nav>
+
+			<script>
+				(function () {
+					const search = location.search;
+					const query = new URLSearchParams(search);
+					const value = query.get("partial");
+					if (value) {
+						const num = Number(value);
+
+						if (!isNaN(num) && Boolean(num)) {
+							const SearchPageMain = document.getElementById("SearchPageMain");
+							const appNav = document.getElementById("appNav");
+							appNav.hidden = true;
+							SearchPageMain.classList.remove("main-nav-pb");
+						}
+					}
+				})();
+			</script>
+		</div>
+	</body>
 </html>
