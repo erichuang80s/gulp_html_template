@@ -13,7 +13,7 @@
       <% } %>
     </title>
   </head>
-  <body>
+  <body <%= typeof bodyClassName !== 'undefined' ? `class=${bodyClassName}` : ''  _%>>
     <div class="h-100 d-flex flex-column">
 
 
