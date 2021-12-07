@@ -151,9 +151,12 @@
                                 <div class="text-secondary fs-7"><%= item.date %> </div> 
                                 <div class="border-bottom my-2"></div>
                                 <% 
-                                    const detaies = [
+                                    const detaies_1 = [
                                         {label: '司機', value: item.driver },
                                         {label: '電話', value: item.phone },
+                                    ]
+                                    
+                                    const detaies_2 = [
                                         {label: '地址', value: item.adress },
                                         {label: '方向', value: item.direction },
                                         {label: '衛星', value: item.satellite },
@@ -162,7 +165,13 @@
                                 %>
 
                                 <ul class="list-group list-group-flush">
-                                    <% detaies.forEach(element => { %>
+                                    <% detaies_1.forEach(element => { %>
+                                        <li class="list-group-item ps-0 border-bottom-0">
+                                            <div class="text-secondary fs-7"><%= element.label _%> </div>
+                                            <span><%= element.value _%></span>
+                                        </li>
+                                    <% }) %>
+                                    <% detaies_2.forEach(element => { %>
                                         <li class="list-group-item ps-0">
                                             <div class="text-secondary fs-7"><%= element.label _%> </div>
                                             <span><%= element.value _%></span>
